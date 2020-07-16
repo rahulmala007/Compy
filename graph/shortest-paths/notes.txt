@@ -1,0 +1,51 @@
+Things to think:
+
+									BELLMAN-FORD
+
+1)Why n-1 iterations in bellman ford?
+2)How to retreive the paths from the bellman ford algorithm?
+3)How to find the negative edged cycle?
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ans1)
+*First note that if all cycles have weight>=0 we can remove that cycle from our *shortest path and our path will still be shortest
+*So our path is a simple path without cycles
+*Maximum length of such a path can be n-1
+*let us say s,v1,v2,v3,v4,v be the shortest path from s to v
+
+In the first iteration s-v1 will get relaxed as we are iterating through all edges and will remain constant as it the shotest path from s->v1 (subpath of shortest paths are also shortest **proof is obvious)
+
+now as s-v1 is relaxed v1.d is fixed so in the next iteration v2.d will be fixed in the next iteration contining this we may need at max  n-1 iterations {each for each edge in the simple path}.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ans2)
+Assume there are multiple shortest paths between vertices.We need to take one of those paths for each vertices.
+Hence we will get a unique shortest path now between two vertices..(this can be said only for comparing source and other vertices but b/w the two vertices to say that we need extra proof......see cormen)
+
+Using the similar logic as above we can say that the shortest paths will form a tree hence we can store the parent for all the vertices while relaxing hence forming all the shortest paths. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ans3) Note that in the nth iteration the vertices which include the cycle in their shortest path will continue getting relaxed.
+So choose one such vertex and traverse to the start of the cycle by x=parent[x] n times as path without a cycle can be atmost n-1 length long.. so now we are inside the cycle. now recurively x=parent[x] and find the cycle until we again get to the start point.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q)Using large negative constants to make each edge weight positive and then use djikstra. This will not work why?
+
+A) consider two paths having negative edges:
+a) length=2 total1=5
+b) length=10 total2=1
+adding constant m to all edges will lead to path values 
+a) total1=5+2*m
+b) total2=1+10*m
+but for all m>4 we  have total1<total2 which is wrong as total2 is a smaller path.
+As we are considering path lengths in total path cost after adding the constant we cannot use it.
+
+
+  
+
+									    SPFA
